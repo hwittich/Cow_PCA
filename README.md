@@ -1,2 +1,26 @@
 # Cow_PCA
-STAT488 - Multivariate Statistics final project at Loyola University Chicago
+This project was a created for STAT 488 - Multivariate Statistics, a course taught by Dr. Whalen at Loyola University Chicago. The assignment was to replicate a multivariate statistical analysis conducted in a research study, and to extend the analysis in some way. My partner, Daniel Araujo, and I decided to recreate the analysis of [Boushaba et. al. (2019)](https://www.sciencedirect.com/science/article/pii/S1751731118001179?via%3Dihub), who performed PCA to study the genetic population structure of cattle.
+
+## Introduction
+
+Today, with next-generation DNA sequencing methods, a wealth of genotypic data has been produced for use in phylogenetic studies. Genetic markers are inherited, therefore they represent signatures of ancestry that can be used to trace evolutionary histories. For this reason, genetic analysis of different organisms’ genomes can provide additional evidence of evolutionary relationships and help clarify experimentally-produced phylogenies. This represents the main objective of this paper: to incorporate genetic data into the study of the evolutionary relationships between six different cattle populations from Algeria and Morocco.
+
+The geographic distribution of these cattle populations has led to different processes of domestication for these breeds, producing different traits in the cattle populations. It is believed that the differential domestication of these cattle breeds has led to artificial selection for different genetic markers in the cattle, which resulted in their different traits. This exemplifies the way that unplanned breeding of domestic animals may cause rare genetic traits to be lost within populations (and, ultimately, in the whole species), or conversely increase the frequency of unwanted, deleterious genetic variants. Thus, the main goal of the study we are analyzing was to detect the genetic population structure among these cattle breeds and provide genetic evidence for the different traits characteristic of each population.
+
+Principal Component Analysis (PCA) is one method that has been successfully applied to genetic data to detect population structure and partition phylogenies. These are the methods employed by the paper to explore the genetic population structure of these cattle breeds; they hypothesized that if the clusters produced by their PCA/clustering analysis aligned with the known population groups of the cattle, then the differences in traits between the cattle could be attributed to different genetic markers selected for by differential breeding methods. To accomplish this, the authors combined genotype data from 121 Algerian cattle and 82 Moroccan cattle with genotype data from the WIDDE database. In total, they had genotypes for 732 individuals belonging to 23 different breeds.
+
+## Implementation
+
+To replicate their analysis, we downloaded their post-QC dataset from an online data portal, Data INRAE. The data came in csv format, with ~730 rows - one for each individual - and ~40,000 columns - the first column was the population ID for each cow and the remaining columns contained the genotype data for each SNP used in the study. We discovered that there were non-numeric values in the dataframe, so we performed the as.numeric() function on every column to ensure everything was formatted correctly. This introduced NA values, which we just replaced with the average of the genotype values in the column. While this workaround doesn’t make biological sense, it does reduce the effect that the NAs will have on the downstream analysis. With references panels for the populations analyzed, we could have performed imputation, thogh that was beyond the scope of our project. The final alteration we made to the dataset was removing any SNPs where all individuals had the same genotype, or in other words where the variance was 0, as these provided no information for the PCA and clustering analysis.
+
+We used the dudi.pca() method from the ade4 R package to perform the PCA. We chose not to scale the data, because all dosages are reported in the same “units” on the same scale, but we did choose to center the data. With our PCA results, we produced a PC1 vs. PC2 plot like they did in the paper, but we additionally decided to produce a PC1 vs. PC3 plot and a PC2 vs. PC3 plot (figure 1). We also calculated and plotted the PVE for the first 10 PCs.
+
+![Figure 1. PC1-3 Plots]()
+
+Finally, we replicated their NJ clustering method to produce a phylogenetic tree of the cattle in the dataset. We first decided to recreate the tree shown in figure 3 of the paper by calculating the ASD between individuals from 10 of the 23 total populations. We were able to accomplish this using ape, as the authors describe in the paper, by combining the dist.gene() function to produce the ASD distance matric and the nj() function to generate a tree using that matrix. To extend this analysis, we performed NJ clustering on all ~700 individuals from every population to generate a similar tree (figure 2). Finally, we used the gene.dist() function from the hierfstat R package to generate a population pairwise Fst distance matrix between the 10 subsetted populations from Algeria, Europe, and Morocco, and again used ape’s nj() function to generate the tree. 
+
+![Figure 2. Phylogenetic Tree of All Cows Colored by Population]()
+
+## Credits
+
+Daniel Araujo, Henry Wittich.
