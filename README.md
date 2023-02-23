@@ -15,11 +15,11 @@ To replicate their analysis, we downloaded their post-QC dataset from an online 
 
 We used the dudi.pca() method from the ade4 R package to perform the PCA. We chose not to scale the data, because all dosages are reported in the same “units” on the same scale, but we did choose to center the data. With our PCA results, we produced a PC1 vs. PC2 plot like they did in the paper, but we additionally decided to produce a PC1 vs. PC3 plot and a PC2 vs. PC3 plot (figure 1). We also calculated and plotted the PVE for the first 10 PCs.
 
-![Figure 1. PC1-3 Plots]()
+![Figure 1. PC1-3 Plots](https://github.com/hwittich/Cow_PCA/blob/main/pcplots.png?raw=true)
 
 Finally, we replicated their NJ clustering method to produce a phylogenetic tree of the cattle in the dataset. We first decided to recreate the tree shown in figure 3 of the paper by calculating the ASD between individuals from 10 of the 23 total populations. We were able to accomplish this using ape, as the authors describe in the paper, by combining the dist.gene() function to produce the ASD distance matric and the nj() function to generate a tree using that matrix. To extend this analysis, we performed NJ clustering on all ~700 individuals from every population to generate a similar tree (figure 2). Finally, we used the gene.dist() function from the hierfstat R package to generate a population pairwise Fst distance matrix between the 10 subsetted populations from Algeria, Europe, and Morocco, and again used ape’s nj() function to generate the tree. 
 
-![Figure 2. Phylogenetic Tree of All Cows Colored by Population]()
+![Figure 2. Phylogenetic Tree of All Cows Colored by Population](https://github.com/hwittich/Cow_PCA/blob/main/njtree.png?raw=true)
 
 ## Credits
 
