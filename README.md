@@ -1,4 +1,4 @@
-# Cow_PCA
+# Detecting Population Structure in Cattle Populations with PCA
 This project was a created for STAT 488 - Multivariate Statistics, a course taught by Dr. Whalen at Loyola University Chicago. The assignment was to replicate a multivariate statistical analysis conducted in a research study, and to extend the analysis in some way. My partner, Daniel Araujo, and I decided to recreate the analysis of [Boushaba et. al. (2019)](https://www.sciencedirect.com/science/article/pii/S1751731118001179?via%3Dihub), who performed PCA to study the genetic population structure of cattle.
 
 ## Introduction
